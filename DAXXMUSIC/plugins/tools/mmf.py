@@ -3,8 +3,8 @@ import textwrap
 
 from PIL import Image, ImageDraw, ImageFont
 
-from FallenRobot import telethn as bot
-from FallenRobot.events import register
+from DAXXMUSIC import telethn as bot
+from DAXXMUSIC.events import register
 
 
 @register(pattern="^/mmf ?(.*)")
