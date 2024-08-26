@@ -1,41 +1,25 @@
 import os
 import textwrap
-
 from PIL import Image, ImageDraw, ImageFont
+from pyrogram import filters
+from pyrogram.types import Message
+from DAXXMUSIC import app
 
-from DAXXMUSIC import telethon as bot
-from DAXXMUSIC.events import register
+@app.on_message(filters.command("mmf"))
+async def mmf(_, message: Message):
+    chat_id = message.chat.id
+    reply_message = message.reply_to_message
 
-
-@register(pattern="^/mmf ?(.*)")
-async def handler(event):
-    if event.fwd_from:
+    if len(message.text.split()) < 2:
+        await message.reply_text("**ɢɪᴠᴇ ᴍᴇ ᴛᴇxᴛ ᴀғᴛᴇʀ /mmf ᴛᴏ ᴍᴇᴍɪғʏ.**")
         return
 
-    if not event.reply_to_msg_id:
-        await event.reply("Provide Some Text To Draw!")
-
-        return
-
-    reply_message = await event.get_reply_message()
-
-    if not reply_message.media:
-        await event.reply("```Reply to a image/sticker.```")
-
-        return
-
-    file = await bot.download_media(reply_message)
-
-    msg = await event.reply("```Memifying this image! ✊🏻 ```")
-
-    text = str(event.pattern_match.group(1)).strip()
-
-    if len(text) < 1:
-        return await msg.reply("You might want to try `/mmf text`")
+    msg = await message.reply_text("**ᴍᴇᴍɪғʏɪɴɢ ᴛʜɪs ɪᴍᴀɢᴇ **")
+    text = message.text.split(None, 1)[1]
+    file = await app.download_media(reply_message)
 
     meme = await drawText(file, text)
-
-    await bot.send_file(event.chat_id, file=meme, force_document=False)
+    await app.send_document(chat_id, document=meme)
 
     await msg.delete()
 
@@ -50,19 +34,16 @@ async def drawText(image_path, text):
     i_width, i_height = img.size
 
     if os.name == "nt":
-        fnt = "ariel.ttf"
-
+        fnt = "arial.ttf"
     else:
-        fnt = "./FallenRobot/resources/default.ttf"
+        fnt = "./DAXXMUSIC/assets/default.ttf"
 
     m_font = ImageFont.truetype(fnt, int((70 / 640) * i_width))
 
     if ";" in text:
         upper_text, lower_text = text.split(";")
-
     else:
         upper_text = text
-
         lower_text = ""
 
     draw = ImageDraw.Draw(img)
@@ -173,6 +154,3 @@ async def drawText(image_path, text):
     img.save(webp_file, "webp")
 
     return webp_file
-
-
-__mod_name__ = "mmf"
