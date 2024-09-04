@@ -65,6 +65,6 @@ RUN pip install cloudscraper
 RUN pip install pycryptodome
 RUN pip install opencv-python
 
-RUN pip3 install -U -r requirements.txt
+RUN /bin/sh -c pip3 install -U -r requirements.txt
 
 CMD bash start
