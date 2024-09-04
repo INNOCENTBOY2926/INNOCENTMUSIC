@@ -53,6 +53,7 @@ RUN pip install unidecode
 RUN pip install yt-dlp
 RUN pip install youtube-search
 RUN pip install youtube-search-python
+RUN pip install gtts
 git clone www.github.com/AsmSafone/SafoneAPI
 RUN pip install lexica-api==1.5.1
 RUN pip install httpx==0.25.2
