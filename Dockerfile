@@ -12,7 +12,7 @@ RUN pip install bard
 RUN pip install SpeechRecognition
 RUN pip install pornhub-api==0.2.0
 RUN pip install aiohttp 
-RUN pip install asyncio==1.36.0
+RUN pip install asyncio
 RUN pip install beautifulsoup4
 RUN pip install daxxhub
 RUN pip install deepai
